@@ -1,0 +1,17 @@
+package_update: true
+package_upgrade: true
+packages:
+  - amazon-ssm-agent
+runcmd:
+  - ["mkdir", "-m", "0755", "-p", "/var/log/journal"]
+  - ["chown", "root:root", "/var/log/journal"]
+  - which systemctl >/dev/null && systemctl restart systemd-journald.service amazon-ssm-agent.service
+  - yum update -y
+# Install kubectl
+  - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.32.0/2024-12-20/bin/linux/amd64/kubectl
+  - chmod +x kubectl
+  - sudo mv kubectl /usr/local/bin/
+# Install helm
+  - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+  - chmod 700 get_helm.sh
+  - ./get_helm.sh

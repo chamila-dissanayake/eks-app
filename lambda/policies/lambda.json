@@ -1,0 +1,64 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:${aws_region}:${aws_account}:*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:${aws_region}:${aws_account}:log-group:/aws/lambda/${function_name}:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:Describe*",
+                "secretsmanager:Get*",
+                "secretsmanager:List*"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListAllMyBuckets",
+                "s3:GetBucketLocation",
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${s3_bucket_name}",
+                "arn:aws:s3:::${s3_bucket_name}/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt*",
+                "kms:DescribeKey",
+                "kms:ListAliases",
+                "kms:ListKeys"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws:lambda:${aws_region}:${aws_account}:function:${function_name}"
+            ]
+        }
+    ]
+}
