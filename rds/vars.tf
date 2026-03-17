@@ -8,37 +8,6 @@ variable "tags" {
   type        = map(any)
 }
 
-/*
-variable "rds" {
-  description = "RDS configuration"
-  type = map(any)
-  default = {
-    cluster_identifier           = ""
-    backup_retention             = 7
-    backup_window                = "07:00-09:00"
-    engine                       = "aurora-postgresql"
-    engine_version               = "15.13"
-    instance_class               = "db.t4g.medium"
-    maintenance_window           = "sun:04:00-sun:05:00"
-    multi_az                     = false
-    snapshot_identifier          = "golden-snapshot"
-    sns_topic                    = ""
-    cluster_param_grp            = "default.aurora-postgresql15"
-    db_param_grp                 = "default.aurora-postgresql15"
-    master_username              = "dba_admin"
-    auto_minor_version_upgrade   = false
-    instance_count               = 1
-    route53_record_ttl           = 60
-    freeable_memory_period       = 60
-    freeable_memory_eval_periods = 5
-    freeable_memory_threshold    = 512000
-    high_cpu_period              = 60
-    high_cpu_eval_periods        = 3
-    high_cpu_threshold           = 70
-  }
-}
-*/
-
 variable "rds" {
   description = "RDS configuration"
   type = object({
@@ -66,33 +35,3 @@ variable "rds" {
     high_cpu_threshold           = optional(number, 70)
   })
 }
-
-/*
-locals {
-  defaults = {
-    backup_retention           = 7
-    backup_window              = "07:00-09:00"
-    engine                     = "aurora-postgresql"
-    engine_version             = 14.9
-    instance_class             = "db.t4g.medium"
-    maintenance_window         = "sun:04:00-sun:05:00"
-    multi_az                   = false
-    snapshot_identifier        = "golden-snapshot"
-    cluster_param_grp          = "default.aurora-postgresql14"
-    db_param_grp               = "default.aurora-postgresql14"
-    master_username            = "dba_admin"
-    auto_minor_version_upgrade = false
-    instance_count             = 1
-    route53_record_ttl         = 60   // seconds
-    freeable_memory_period     = 60   // minutes
-    freeable_memory_threshold  = 1000 // MB
-    high_cpu_period            = 60   // minutes
-    high_cpu_threshold         = 80   // percent
-    freeable_memory_threshold  = 1000 // MB
-    high_cpu_threshold         = 80   // percent
-  }
-  rds = merge(
-    local.defaults,
-    var.rds
-  )
-}*/
